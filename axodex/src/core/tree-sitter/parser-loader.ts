@@ -197,6 +197,70 @@ const SOURCES: Record<string, GrammarSource> = {
       '`axodex/vendor/tree-sitter-zig`) failed to load. ' +
       'Likely cause: no prebuilt `.node` for this platform/architecture.',
   },
+  // ── v0.3.7 additions: 12 new languages ──────────────────────────────
+  // These are npm dependencies (not vendored). They load the same way as
+  // the existing npm-dep grammars (JS/TS/Python/Go/etc.).
+  [SupportedLanguages.Bash]: {
+    load: () => _require('tree-sitter-bash'),
+    unavailableNote:
+      'Bash parsing requires `tree-sitter-bash`. ' +
+      'Critical for AXONIZ shell tools output parsing. `npm ci` to fix.',
+  },
+  [SupportedLanguages.SQL]: {
+    load: () => _require('tree-sitter-sql'),
+    unavailableNote:
+      'SQL parsing requires `tree-sitter-sql`. Check the install.',
+  },
+  [SupportedLanguages.Dockerfile]: {
+    load: () => _require('tree-sitter-dockerfile'),
+    unavailableNote:
+      'Dockerfile parsing requires `tree-sitter-dockerfile`. Check the install.',
+  },
+  [SupportedLanguages.YAML]: {
+    load: () => _require('tree-sitter-yaml'),
+    unavailableNote:
+      'YAML parsing requires `tree-sitter-yaml`. Check the install.',
+  },
+  [SupportedLanguages.TOML]: {
+    load: () => _require('tree-sitter-toml'),
+    unavailableNote:
+      'TOML parsing requires `tree-sitter-toml`. Check the install.',
+  },
+  [SupportedLanguages.JSON]: {
+    load: () => _require('tree-sitter-json'),
+    unavailableNote:
+      'JSON parsing requires `tree-sitter-json`. Check the install.',
+  },
+  [SupportedLanguages.HTML]: {
+    load: () => _require('tree-sitter-html'),
+    unavailableNote:
+      'HTML parsing requires `tree-sitter-html`. Check the install.',
+  },
+  [SupportedLanguages.CSS]: {
+    load: () => _require('tree-sitter-css'),
+    unavailableNote:
+      'CSS parsing requires `tree-sitter-css`. Check the install.',
+  },
+  [SupportedLanguages.Scala]: {
+    load: () => _require('tree-sitter-scala'),
+    unavailableNote:
+      'Scala parsing requires `tree-sitter-scala`. Check the install.',
+  },
+  [SupportedLanguages.Elixir]: {
+    load: () => _require('tree-sitter-elixir'),
+    unavailableNote:
+      'Elixir parsing requires `tree-sitter-elixir`. Check the install.',
+  },
+  [SupportedLanguages.Lua]: {
+    load: () => _require('tree-sitter-lua'),
+    unavailableNote:
+      'Lua parsing requires `tree-sitter-lua`. Check the install.',
+  },
+  [SupportedLanguages.GraphQL]: {
+    load: () => _require('tree-sitter-graphql'),
+    unavailableNote:
+      'GraphQL parsing requires `tree-sitter-graphql`. Check the install.',
+  },
 };
 
 /**
