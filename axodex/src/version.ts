@@ -34,7 +34,7 @@
  *   5. Commit + push + `npm publish`
  */
 
-export const AXODEX_VERSION = "V00.01.000-beta-01";
+export const AXODEX_VERSION = "V00.01.001-beta-02";
 
 /**
  * The release stage of the current version. Useful for runtime branching
@@ -47,7 +47,7 @@ export const AXODEX_RELEASE_STAGE: "alpha" | "beta" | "rc" | "stable" = "beta";
  * package.json "version" should match. The version.test.ts verifies
  * they stay in sync.
  */
-export const AXODEX_VERSION_SEMVER = "0.1.0-beta.1";
+export const AXODEX_VERSION_SEMVER = "0.1.1-beta.2";
 
 /**
  * Parse a FRAZIYM version string into its components. Returns null if
