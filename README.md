@@ -1165,3 +1165,10 @@ Built by the community — not officially maintained, but worth checking out.
 - [transformers.js](https://huggingface.co/docs/transformers.js) — browser ML
 - [Graphology](https://graphology.github.io/) — graph data structures
 - [MCP](https://modelcontextprotocol.io/) — Model Context Protocol
+
+
+## Attribution
+
+Axodex is a derivative of [GitNexus](https://github.com/abhigyanpatwari/GitNexus), originally created by **Abhigyan Patwari**. We are deeply grateful for his exceptional engineering work on the tree-sitter grammar vendoring, knowledge-graph ingestion pipeline, and multi-language call-extraction architecture that forms the foundation of Axodex.
+
+See [ATTRIBUTION.md](./ATTRIBUTION.md) for full details.
