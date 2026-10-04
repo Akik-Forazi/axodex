@@ -34,20 +34,20 @@
  *   5. Commit + push + `npm publish`
  */
 
-export const AXODEX_VERSION = "V00.01.001-beta-02";
+export const AXODEX_VERSION = 'V00.01.002-beta-02';
 
 /**
  * The release stage of the current version. Useful for runtime branching
  * (e.g. show a "beta" warning banner in the UI).
  */
-export const AXODEX_RELEASE_STAGE: "alpha" | "beta" | "rc" | "stable" = "beta";
+export const AXODEX_RELEASE_STAGE: 'alpha' | 'beta' | 'rc' | 'stable' = 'beta';
 
 /**
  * Semver-compatible translation of AXODEX_VERSION. This is what
  * package.json "version" should match. The version.test.ts verifies
  * they stay in sync.
  */
-export const AXODEX_VERSION_SEMVER = "0.1.1-beta.2";
+export const AXODEX_VERSION_SEMVER = '0.1.1-beta.2';
 
 /**
  * Parse a FRAZIYM version string into its components. Returns null if
@@ -58,7 +58,7 @@ export function parseFraziymVersion(v: string): {
   platform: number;
   feature: number;
   bugfix: number;
-  stage: "alpha" | "beta" | "rc" | "stable";
+  stage: 'alpha' | 'beta' | 'rc' | 'stable';
   revision: number | null;
 } | null {
   const m = v.match(/^V(\d{2})\.(\d{2})\.(\d{3})(?:-(alpha|beta|rc)(?:-(\d{2}))?)?$/);
@@ -67,7 +67,7 @@ export function parseFraziymVersion(v: string): {
     platform: Number(m[1]),
     feature: Number(m[2]),
     bugfix: Number(m[3]),
-    stage: (m[4] as "alpha" | "beta" | "rc" | undefined) ?? "stable",
+    stage: (m[4] as 'alpha' | 'beta' | 'rc' | undefined) ?? 'stable',
     revision: m[5] ? Number(m[5]) : null,
   };
 }
@@ -80,7 +80,7 @@ export function fraziymToSemver(v: string): string | null {
   const p = parseFraziymVersion(v);
   if (!p) return null;
   let semver = `${p.platform}.${p.feature}.${p.bugfix}`;
-  if (p.stage !== "stable") {
+  if (p.stage !== 'stable') {
     semver += `-${p.stage}`;
     if (p.revision !== null) semver += `.${p.revision}`;
   }
