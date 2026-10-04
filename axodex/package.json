@@ -1,6 +1,6 @@
 {
   "name": "@fraziym/axodex",
-  "version": "1.6.12",
+  "version": "0.1.0-beta.1",
   "description": "Graph-powered code intelligence for AI agents. Index any codebase, query via MCP or CLI. Bundled with AXONIZ.",
   "author": "Akik Faraji <akikfaraji@gmail.com>",
   "license": "PolyForm-Noncommercial-1.0.0",
