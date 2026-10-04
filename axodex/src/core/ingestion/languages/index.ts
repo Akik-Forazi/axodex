@@ -51,11 +51,11 @@ export const providers = {
   [SupportedLanguages.Vue]: vueProvider,
   [SupportedLanguages.Cobol]: cobolProvider,
   [SupportedLanguages.Zig]: zigProvider,
-} satisfies Record<SupportedLanguages, LanguageProvider>;
+} satisfies Partial<Record<SupportedLanguages, LanguageProvider>>;
 
-/** Get provider by language enum (always succeeds for SupportedLanguages). */
-export function getProvider(language: SupportedLanguages): LanguageProvider {
-  return providers[language];
+/** Get provider by language enum. Returns null for languages without a provider yet. */
+export function getProvider(language: SupportedLanguages): LanguageProvider | null {
+  return providers[language] ?? null;
 }
 
 /** Pre-built extension → provider lookup (built once at module load). */

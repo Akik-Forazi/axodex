@@ -19,7 +19,7 @@
  *
  * The package.json version is a semver-compatible translation of this
  * string because npm requires valid semver. The mapping is:
- *   V00.01.000-beta-01  →  0.1.0-beta.1
+ *   V00.01.001-beta-02  →  0.1.1-beta.2
  *   V00 → major 0
  *   01  → minor 1
  *   000 → patch 0

@@ -3075,4 +3075,17 @@ export const LANGUAGE_QUERIES: Record<SupportedLanguages, string> = {
   [SupportedLanguages.Vue]: TYPESCRIPT_QUERIES, // Vue <script> blocks are parsed as TypeScript
   [SupportedLanguages.Cobol]: '', // Standalone regex processor — no tree-sitter queries
   [SupportedLanguages.Zig]: ZIG_QUERIES,
+  // v0.3.7 additions — empty queries until per-language extraction is written
+  [SupportedLanguages.Bash]: '',
+  [SupportedLanguages.SQL]: '',
+  [SupportedLanguages.Dockerfile]: '',
+  [SupportedLanguages.YAML]: '',
+  [SupportedLanguages.TOML]: '',
+  [SupportedLanguages.JSON]: '',
+  [SupportedLanguages.HTML]: '',
+  [SupportedLanguages.CSS]: '',
+  [SupportedLanguages.Scala]: '',
+  [SupportedLanguages.Elixir]: '',
+  [SupportedLanguages.Lua]: '',
+  [SupportedLanguages.GraphQL]: '',
 };

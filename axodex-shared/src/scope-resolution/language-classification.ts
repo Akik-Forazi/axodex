@@ -47,6 +47,19 @@ export const LanguageClassifications: Readonly<Record<SupportedLanguages, Langua
     [SupportedLanguages.Vue]: 'experimental',
     [SupportedLanguages.Cobol]: 'experimental',
     [SupportedLanguages.Zig]: 'experimental',
+    // v0.3.7 additions — all experimental until call-extractors are written
+    [SupportedLanguages.Bash]: 'experimental',
+    [SupportedLanguages.SQL]: 'experimental',
+    [SupportedLanguages.Dockerfile]: 'experimental',
+    [SupportedLanguages.YAML]: 'experimental',
+    [SupportedLanguages.TOML]: 'experimental',
+    [SupportedLanguages.JSON]: 'experimental',
+    [SupportedLanguages.HTML]: 'experimental',
+    [SupportedLanguages.CSS]: 'experimental',
+    [SupportedLanguages.Scala]: 'experimental',
+    [SupportedLanguages.Elixir]: 'experimental',
+    [SupportedLanguages.Lua]: 'experimental',
+    [SupportedLanguages.GraphQL]: 'experimental',
   };
 
 /** Convenience predicate: is this language gating Ring 4 retirement? */

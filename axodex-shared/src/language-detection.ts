@@ -55,6 +55,19 @@ const EXTENSION_MAP: Record<SupportedLanguages, readonly string[]> = {
   [SupportedLanguages.Vue]: ['.vue'],
   [SupportedLanguages.Cobol]: ['.cbl', '.cob', '.cpy', '.cobol'],
   [SupportedLanguages.Zig]: ['.zig'],
+  // v0.3.7 additions
+  [SupportedLanguages.Bash]: ['.sh', '.bash', '.zsh', '.fish'],
+  [SupportedLanguages.SQL]: ['.sql'],
+  [SupportedLanguages.Dockerfile]: [], // extensionless: 'Dockerfile' basename
+  [SupportedLanguages.YAML]: ['.yaml', '.yml'],
+  [SupportedLanguages.TOML]: ['.toml'],
+  [SupportedLanguages.JSON]: ['.json', '.jsonc'],
+  [SupportedLanguages.HTML]: ['.html', '.htm', '.xhtml'],
+  [SupportedLanguages.CSS]: ['.css', '.scss', '.sass', '.less'],
+  [SupportedLanguages.Scala]: ['.scala', '.sbt'],
+  [SupportedLanguages.Elixir]: ['.ex', '.exs'],
+  [SupportedLanguages.Lua]: ['.lua'],
+  [SupportedLanguages.GraphQL]: ['.graphql', '.gql', '.graphqls'],
 } satisfies Record<SupportedLanguages, readonly string[]>; // Ensure exhaustiveness
 
 /** Pre-built reverse lookup: extension → language (built once at module load). */
@@ -129,6 +142,19 @@ const SYNTAX_MAP: Record<SupportedLanguages, string> = {
   [SupportedLanguages.Vue]: 'typescript',
   [SupportedLanguages.Cobol]: 'cobol',
   [SupportedLanguages.Zig]: 'zig',
+  // v0.3.7 additions
+  [SupportedLanguages.Bash]: 'bash',
+  [SupportedLanguages.SQL]: 'sql',
+  [SupportedLanguages.Dockerfile]: 'docker',
+  [SupportedLanguages.YAML]: 'yaml',
+  [SupportedLanguages.TOML]: 'toml',
+  [SupportedLanguages.JSON]: 'json',
+  [SupportedLanguages.HTML]: 'markup',
+  [SupportedLanguages.CSS]: 'css',
+  [SupportedLanguages.Scala]: 'scala',
+  [SupportedLanguages.Elixir]: 'elixir',
+  [SupportedLanguages.Lua]: 'lua',
+  [SupportedLanguages.GraphQL]: 'graphql',
 } satisfies Record<SupportedLanguages, string>; // Ensure exhaustiveness
 
 /** Non-code file extensions → Prism-compatible syntax identifiers */
