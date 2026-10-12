@@ -56,7 +56,15 @@ export function runWebBuild({
     // String form uses the platform shell (cmd.exe / sh) so `npm` resolves to
     // npm.cmd on Windows. execFileSync('npm') / execFileSync('npm.cmd')
     // without a shell fails on Windows.
-    exec('npm ci', { cwd: webRoot, stdio: 'inherit' });
+    //
+    // --ignore-scripts avoids the npm 11+ EALLOWSCRIPTS error:
+    //   "npm error code EALLOWSCRIPTS
+    //    npm error --allow-scripts is not allowed in project-scoped installs.
+    //    Add the entries to the 'allowScripts' field in package.json, or to
+    //    .npmrc, instead."
+    // The web build doesn't need postinstall scripts (no native bindings
+    // in axodex-web itself), so --ignore-scripts is safe.
+    exec('npm ci --ignore-scripts', { cwd: webRoot, stdio: 'inherit' });
   }
   exec('npm run build', { cwd: webRoot, stdio: 'inherit', timeout: timeoutMs });
 
