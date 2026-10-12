@@ -53,18 +53,27 @@ export function runWebBuild({
     // CI should install axodex-web itself (cached, its own step) so this
     // fallback only fires for a local `npm pack` / `npm publish`.
     console.log('[build] installing axodex-web dependencies (no local node_modules)…');
-    // String form uses the platform shell (cmd.exe / sh) so `npm` resolves to
-    // npm.cmd on Windows. execFileSync('npm') / execFileSync('npm.cmd')
-    // without a shell fails on Windows.
+
+    // CRITICAL: npm 11+ blocks `npm ci` in sub-projects (project-scoped
+    // installs) if the user's global ~/.npmrc has `allow-scripts=true` set
+    // (which happens when the user runs `npm install-scripts approve`).
+    // The error is:
+    //   npm error code EALLOWSCRIPTS
+    //   npm error --allow-scripts is not allowed in project-scoped installs.
     //
-    // Note: we DON'T pass --ignore-scripts here because npm 11+ blocks BOTH
-    // --allow-scripts AND --ignore-scripts in project-scoped installs with
-    // EALLOWSCRIPTS. Instead, axodex-web/package.json declares
-    // `"allowScripts": false` which achieves the same effect (skip install
-    // scripts for all deps) via the package.json field that npm 11+ accepts.
-    // axodex-web has no native bindings (pure TS/React/Vite), so skipping
-    // postinstall scripts is safe.
-    exec('npm ci', { cwd: webRoot, stdio: 'inherit' });
+    // The fix: pass --userconfig pointing to an EMPTY temp .npmrc file.
+    // This overrides ALL inherited .npmrc settings (global + project-level),
+    // so npm 11 doesn't see `allow-scripts=true` from the user's config.
+    // With a clean config, `npm ci` runs with default settings (no install
+    // scripts), which is what we want — axodex-web has no native bindings.
+    const tempNpmrc = path.join(webRoot, '.temp-publish.npmrc');
+    fsImpl.writeFileSync(tempNpmrc, '');  // empty = no inherited allow-scripts
+    console.log(`[build] using temp .npmrc to bypass EALLOWSCRIPTS`);
+    try {
+      exec(`npm ci --userconfig "${tempNpmrc}"`, { cwd: webRoot, stdio: 'inherit' });
+    } finally {
+      try { fsImpl.unlinkSync(tempNpmrc); } catch { /* best-effort cleanup */ }
+    }
   }
   exec('npm run build', { cwd: webRoot, stdio: 'inherit', timeout: timeoutMs });
 
