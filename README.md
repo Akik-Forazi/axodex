@@ -3,7 +3,7 @@
 <div align="center">
 
   <p>
-    <strong>V00.01.000-beta-01</strong> · FRAZIYM versioning · <a href="https://www.npmjs.com/package/@fraziym/axodex"><code>@fraziym/axodex</code></a>
+    <strong>V00.01.003-beta-01</strong> · FRAZIYM versioning · <a href="https://www.npmjs.com/package/@fraziym/axodex"><code>@fraziym/axodex</code></a>
   </p>
 
   <p>
