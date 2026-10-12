@@ -57,14 +57,14 @@ export function runWebBuild({
     // npm.cmd on Windows. execFileSync('npm') / execFileSync('npm.cmd')
     // without a shell fails on Windows.
     //
-    // --ignore-scripts avoids the npm 11+ EALLOWSCRIPTS error:
-    //   "npm error code EALLOWSCRIPTS
-    //    npm error --allow-scripts is not allowed in project-scoped installs.
-    //    Add the entries to the 'allowScripts' field in package.json, or to
-    //    .npmrc, instead."
-    // The web build doesn't need postinstall scripts (no native bindings
-    // in axodex-web itself), so --ignore-scripts is safe.
-    exec('npm ci --ignore-scripts', { cwd: webRoot, stdio: 'inherit' });
+    // Note: we DON'T pass --ignore-scripts here because npm 11+ blocks BOTH
+    // --allow-scripts AND --ignore-scripts in project-scoped installs with
+    // EALLOWSCRIPTS. Instead, axodex-web/package.json declares
+    // `"allowScripts": false` which achieves the same effect (skip install
+    // scripts for all deps) via the package.json field that npm 11+ accepts.
+    // axodex-web has no native bindings (pure TS/React/Vite), so skipping
+    // postinstall scripts is safe.
+    exec('npm ci', { cwd: webRoot, stdio: 'inherit' });
   }
   exec('npm run build', { cwd: webRoot, stdio: 'inherit', timeout: timeoutMs });
 
