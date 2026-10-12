@@ -237,7 +237,12 @@ const SOURCES: Record<string, GrammarSource> = {
       'HTML parsing requires `tree-sitter-html`. Check the install.',
   },
   [SupportedLanguages.CSS]: {
+    // CSS is non-critical for code-graph analysis (TS/JS/Python/Go/etc. cover
+    // the actual code surface). Mark optional so a load failure doesn't halt
+    // the pipeline — CSS files just get skipped.
     load: () => _require('tree-sitter-css'),
+    optional: true,
+    severity: 'warn',
     unavailableNote:
       'CSS parsing requires `tree-sitter-css`. Check the install.',
   },
@@ -350,7 +355,31 @@ const logFailure = (key: string, result: LoadResult): void => {
   if (result.ok === true) return;
   if (logged.has(key)) return;
   logged.add(key);
-  const message = `[axodex] ${result.note} (${result.error.message})`;
+
+  // Node 22+ restriction: `require()` of CJS native bindings (`.node` files
+  // loaded via `process.dlopen`) fails when the importing module graph has
+  // top-level await anywhere. The error message looks like:
+  //   "require() cannot be used on an ESM graph with top-level await.
+  //    Use import() instead."
+  // This is NOT an install problem the user can fix with `npm rebuild` —
+  // it's a fundamental Node ESM/TLA restriction that requires a code change
+  // in axodex (converting the sync `load()` API to async, which would break
+  // 32 sync callers). Demote to debug so the log isn't polluted with a
+  // misleading "Check the install" message.
+  const errMsg = String(result.error?.message ?? '');
+  const isEsmTlaRestriction =
+    errMsg.includes('require() cannot be used on an ESM graph') ||
+    errMsg.includes('Use import() instead') ||
+    errMsg.includes('top-level await');
+
+  if (isEsmTlaRestriction) {
+    logger.debug(
+      `[axodex] ${result.note} (Node 22+ ESM/TLA restriction — not an install problem; grammar skipped)`,
+    );
+    return;
+  }
+
+  const message = `[axodex] ${result.note} (${errMsg})`;
 
   // Severity routes to the correct pino level. Both go to stderr (pino's
   // default destination), so MCP stdio framing is preserved either way —
@@ -423,6 +452,19 @@ const loadGrammar = (key: string): LoadResult => {
 
 export const isLanguageAvailable = (language: SupportedLanguages, filePath?: string): boolean =>
   loadGrammar(resolveLanguageKey(language, filePath)).ok;
+
+/**
+ * True when this language's grammar is registered as `optional: true` in
+ * SOURCES. Callers can use this to choose a non-fatal "skipped, not an
+ * install problem" message instead of the "Try: npm rebuild" hint when an
+ * optional grammar is unavailable. This covers the CSS-on-Node-22+ case
+ * where `require()` fails due to the ESM/TLA restriction — the user can't
+ * fix it with `npm rebuild`, so the misleading hint is suppressed.
+ */
+export const isLanguageOptional = (language: SupportedLanguages, filePath?: string): boolean => {
+  const source = SOURCES[resolveLanguageKey(language, filePath)];
+  return source?.optional === true;
+};
 
 /**
  * True when `language`'s grammar is being treated as unavailable specifically

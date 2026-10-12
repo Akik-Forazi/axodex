@@ -60,6 +60,7 @@ import { readFileContents } from '../filesystem-walker.js';
 import {
   isLanguageAvailable,
   isGrammarRuntimeSkipped,
+  isLanguageOptional,
   createParserForLanguage,
 } from '../../tree-sitter/parser-loader.js';
 import { parseSourceSafe } from '../../tree-sitter/safe-parse.js';
@@ -533,6 +534,13 @@ export async function runChunkedParseAndResolve(
     if (isGrammarRuntimeSkipped(lang as SupportedLanguages)) {
       logger.warn(
         `Skipping ${count} ${lang} file(s) — ${lang} parsing disabled via AXODEX_SKIP_OPTIONAL_GRAMMARS.`,
+      );
+    } else if (isLanguageOptional(lang as SupportedLanguages)) {
+      // Optional grammar unavailable — usually the Node 22+ ESM/TLA
+      // restriction (require() of native bindings fails). Don't tell the
+      // user to `npm rebuild` because that won't fix it.
+      logger.warn(
+        `Skipping ${count} ${lang} file(s) — ${lang} parser unavailable on this Node.js / ESM configuration (non-fatal, skipped).`,
       );
     } else {
       logger.warn(
