@@ -207,7 +207,7 @@ const SOURCES: Record<string, GrammarSource> = {
       'Critical for AXONIZ shell tools output parsing. `npm ci` to fix.',
   },
   [SupportedLanguages.SQL]: {
-    load: () => _require('tree-sitter-sql'),
+    load: () => _require('@fraziym/tree-sitters/sql'),
     unavailableNote:
       'SQL parsing requires `tree-sitter-sql`. Check the install.',
   },
@@ -217,12 +217,12 @@ const SOURCES: Record<string, GrammarSource> = {
       'Dockerfile parsing requires `tree-sitter-dockerfile`. Check the install.',
   },
   [SupportedLanguages.YAML]: {
-    load: () => _require('tree-sitter-yaml'),
+    load: () => _require('@fraziym/tree-sitters/yaml'),
     unavailableNote:
       'YAML parsing requires `tree-sitter-yaml`. Check the install.',
   },
   [SupportedLanguages.TOML]: {
-    load: () => _require('tree-sitter-toml'),
+    load: () => _require('@fraziym/tree-sitters/toml'),
     unavailableNote:
       'TOML parsing requires `tree-sitter-toml`. Check the install.',
   },
@@ -257,12 +257,12 @@ const SOURCES: Record<string, GrammarSource> = {
       'Elixir parsing requires `tree-sitter-elixir`. Check the install.',
   },
   [SupportedLanguages.Lua]: {
-    load: () => _require('tree-sitter-lua'),
+    load: () => _require('@fraziym/tree-sitters/lua'),
     unavailableNote:
       'Lua parsing requires `tree-sitter-lua`. Check the install.',
   },
   [SupportedLanguages.GraphQL]: {
-    load: () => _require('tree-sitter-graphql'),
+    load: () => _require('@fraziym/tree-sitters/graphql'),
     unavailableNote:
       'GraphQL parsing requires `tree-sitter-graphql`. Check the install.',
   },
