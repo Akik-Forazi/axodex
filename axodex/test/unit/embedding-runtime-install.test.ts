@@ -49,6 +49,8 @@ const ENV_KEYS = [
   'AXODEX_EMBEDDING_RUNTIME_DIR',
   'ONNXRUNTIME_NODE_INSTALL',
   'AXODEX_EMBEDDING_INSTALL_TIMEOUT_MS',
+  'AXODEX_HOME',
+  'FRAZIYM_HOME',
 ] as const;
 const savedEnv = Object.fromEntries(ENV_KEYS.map((k) => [k, process.env[k]]));
 
@@ -66,8 +68,8 @@ afterEach(() => {
 });
 
 describe('getEmbeddingRuntimeDir', () => {
-  it('defaults to ~/.axodex/embedding-runtime and honours the env override', () => {
-    expect(getEmbeddingRuntimeDir()).toBe(join(homedir(), '.axodex', 'embedding-runtime'));
+  it('defaults to ~/.fraziym/axodex/embedding-runtime and honours the env override', () => {
+    expect(getEmbeddingRuntimeDir()).toBe(join(homedir(), '.fraziym', 'axodex', 'embedding-runtime'));
     // resolve() so the expectation matches on Windows too (where an absolute
     // POSIX path picks up the cwd drive letter).
     process.env.AXODEX_EMBEDDING_RUNTIME_DIR = resolve('/custom/runtime');
@@ -79,8 +81,19 @@ describe('getEmbeddingRuntimeDir', () => {
     expect(getEmbeddingRuntimeDir()).toBe(resolve('rel/runtime'));
   });
 
+  it('follows AXODEX_HOME, then FRAZIYM_HOME, in that order', () => {
+    process.env.FRAZIYM_HOME = resolve('/fraziym-root');
+    expect(getEmbeddingRuntimeDir()).toBe(
+      join(resolve('/fraziym-root'), 'axodex', 'embedding-runtime'),
+    );
+    process.env.AXODEX_HOME = resolve('/custom/axodex');
+    expect(getEmbeddingRuntimeDir()).toBe(
+      join(resolve('/custom/axodex'), 'embedding-runtime'),
+    );
+  });
+
   it('falls through to the default for an empty or whitespace override', () => {
-    const fallback = join(homedir(), '.axodex', 'embedding-runtime');
+    const fallback = join(homedir(), '.fraziym', 'axodex', 'embedding-runtime');
     process.env.AXODEX_EMBEDDING_RUNTIME_DIR = '';
     expect(getEmbeddingRuntimeDir()).toBe(fallback);
     process.env.AXODEX_EMBEDDING_RUNTIME_DIR = '   ';

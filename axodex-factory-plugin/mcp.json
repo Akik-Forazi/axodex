@@ -2,7 +2,7 @@
   "mcpServers": {
     "axodex": {
       "command": "npx",
-      "args": ["-y", "axodex@1.6.12", "mcp"]
+      "args": ["-y", "axodex@0.1.5-beta.1", "mcp"]
     }
   }
 }

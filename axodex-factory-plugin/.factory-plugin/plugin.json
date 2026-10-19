@@ -1,7 +1,7 @@
 {
   "name": "axodex",
   "description": "Code intelligence powered by a knowledge graph. Provides execution flow tracing, blast radius analysis, and augmented search across your codebase.",
-  "version": "1.6.12",
+  "version": "0.1.5-beta.1",
   "author": {
     "name": "Axodex"
   },

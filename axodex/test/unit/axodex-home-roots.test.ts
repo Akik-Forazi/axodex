@@ -11,8 +11,10 @@ import fs from 'node:fs/promises';
  * The Docker image sets AXODEX_HOME=/data/axodex — the persistent volume
  * that also holds the registry and indexes. Before this fix these three roots
  * used os.homedir() directly, so clones/uploads landed in the container's
- * ephemeral ~/.axodex and were lost on container recreation while the
+ * ephemeral home and were lost on container recreation while the
  * registry (which honors AXODEX_HOME) still pointed at the dead path.
+ * When AXODEX_HOME is unset the roots resolve under the shared Fraziym
+ * root: $FRAZIYM_HOME/axodex (default ~/.fraziym/axodex).
  *
  * The roots are module-level constants resolved at import time from
  * getGlobalDir(), so each case sets the env var, resets the module registry,
@@ -20,10 +22,13 @@ import fs from 'node:fs/promises';
  */
 describe('AXODEX_HOME path roots', () => {
   const savedHome = process.env.AXODEX_HOME;
+  const savedFraziymHome = process.env.FRAZIYM_HOME;
 
   afterEach(() => {
     if (savedHome === undefined) delete process.env.AXODEX_HOME;
     else process.env.AXODEX_HOME = savedHome;
+    if (savedFraziymHome === undefined) delete process.env.FRAZIYM_HOME;
+    else process.env.FRAZIYM_HOME = savedFraziymHome;
     vi.resetModules();
   });
 
@@ -72,32 +77,49 @@ describe('AXODEX_HOME path roots', () => {
     });
   });
 
-  it('falls back to ~/.axodex when AXODEX_HOME is unset', async () => {
+  it('falls back to ~/.fraziym/axodex when AXODEX_HOME is unset', async () => {
     delete process.env.AXODEX_HOME;
+    delete process.env.FRAZIYM_HOME;
     vi.resetModules();
     const { getCloneDir } = await import('../../src/server/git-clone.js');
     const { UPLOAD_ROOT } = await import('../../src/server/upload-paths.js');
     expect(getCloneDir('my-repo')).toBe(
-      path.resolve(os.homedir(), '.axodex', 'repos', 'my-repo'),
+      path.resolve(os.homedir(), '.fraziym', 'axodex', 'repos', 'my-repo'),
     );
-    expect(UPLOAD_ROOT).toBe(path.resolve(os.homedir(), '.axodex', 'uploads'));
+    expect(UPLOAD_ROOT).toBe(path.resolve(os.homedir(), '.fraziym', 'axodex', 'uploads'));
   });
 
-  it('server-mapping falls back to ~/.axodex when AXODEX_HOME is unset', async () => {
+  it('clone root follows FRAZIYM_HOME when AXODEX_HOME is unset', async () => {
+    const fraziymHome = await fs.mkdtemp(path.join(os.tmpdir(), 'fraziym-home-roots-'));
+    try {
+      delete process.env.AXODEX_HOME;
+      process.env.FRAZIYM_HOME = fraziymHome;
+      vi.resetModules();
+      const { getCloneDir } = await import('../../src/server/git-clone.js');
+      expect(getCloneDir('my-repo')).toBe(
+        path.resolve(fraziymHome, 'axodex', 'repos', 'my-repo'),
+      );
+    } finally {
+      await fs.rm(fraziymHome, { recursive: true, force: true });
+    }
+  });
+
+  it('server-mapping falls back to ~/.fraziym/axodex when AXODEX_HOME is unset', async () => {
     // os.homedir() honors $HOME (and $USERPROFILE on Windows), so redirect the
     // home dir to a tmp path to exercise the real fallback (getGlobalDir() ->
-    // ~/.axodex) without writing into the developer's actual
-    // ~/.axodex/server-mapping.json.
+    // ~/.fraziym/axodex) without writing into the developer's actual
+    // ~/.fraziym/axodex/server-mapping.json.
     const fakeHome = await fs.mkdtemp(path.join(os.tmpdir(), 'axodex-fallback-home-'));
     const savedProcessHome = process.env.HOME;
     const savedUserProfile = process.env.USERPROFILE;
     delete process.env.AXODEX_HOME;
+    delete process.env.FRAZIYM_HOME;
     process.env.HOME = fakeHome;
     process.env.USERPROFILE = fakeHome;
     try {
-      await fs.mkdir(path.join(fakeHome, '.axodex'), { recursive: true });
+      await fs.mkdir(path.join(fakeHome, '.fraziym', 'axodex'), { recursive: true });
       await fs.writeFile(
-        path.join(fakeHome, '.axodex', 'server-mapping.json'),
+        path.join(fakeHome, '.fraziym', 'axodex', 'server-mapping.json'),
         JSON.stringify({ 'my-repo': 'fallback-service' }),
         'utf-8',
       );

@@ -306,10 +306,20 @@ function isDirectChild(parent, child) {
 // Mirror axodex/src/storage/shared-store.ts resolveGraphPath (#3352): a
 // shared-store checkout slot may read a commit graph in the same store
 // instead of owning <slot>/lbug. Any other recorded value is ignored.
+// Resolve the global axodex home: AXODEX_HOME wins, then the shared Fraziym
+// root ($FRAZIYM_HOME or ~/.fraziym) with an axodex/ subdir.
+function axodexHomeDir() {
+  const fraziymOverride = (process.env.FRAZIYM_HOME || '').trim();
+  const fraziymDir = fraziymOverride
+    ? path.resolve(fraziymOverride)
+    : path.join(os.homedir(), '.fraziym');
+  return process.env.AXODEX_HOME || path.join(fraziymDir, 'axodex');
+}
+
 function resolveGraphPath(storagePath, metadata) {
   const own = path.join(storagePath, LBUG_DIRECTORY);
   const storesRoot = path.resolve(
-    process.env.AXODEX_HOME || path.join(os.homedir(), '.axodex'),
+    axodexHomeDir(),
     'stores',
   );
   const slot = path.resolve(storagePath);
@@ -378,7 +388,7 @@ function findRegisteredRepo(cwd) {
   const { repoPaths, branch } = registryPathsForCwd(cwd);
   if (repoPaths.length === 0) return null;
 
-  const home = process.env.AXODEX_HOME || path.join(os.homedir(), '.axodex');
+  const home = axodexHomeDir();
   let entries;
   try {
     entries = JSON.parse(fs.readFileSync(path.join(home, 'registry.json'), 'utf-8'));

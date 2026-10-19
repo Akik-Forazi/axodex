@@ -518,7 +518,7 @@ axodex auto-sync stop
 axodex auto-sync reset             # Clear failure state; leaves clones and indexes intact
 ```
 
-`AXODEX_HOME` defaults to `~/.axodex`. A minimal configuration:
+`AXODEX_HOME` defaults to `~/.fraziym/axodex` (the shared Fraziym root; override with `$AXODEX_HOME` or `$FRAZIYM_HOME`). A minimal configuration:
 
 ```yaml
 sync_interval_minutes: 10
