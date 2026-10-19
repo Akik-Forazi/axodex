@@ -68,7 +68,7 @@ Format: **Trigger → Instruction → Reason**. Append new Signs when the same m
 
 - **Trigger:** MCP stderr says no indexed repos.
 - **Do:** `npx axodex analyze` in the target repo; verify `npx axodex list` shows it.
-- **Why:** MCP discovers repos via `~/.axodex/registry.json`, populated by analyze.
+- **Why:** MCP discovers repos via `~/.fraziym/axodex/registry.json`, populated by analyze.
 
 ### Wrong repo in multi-repo setups
 

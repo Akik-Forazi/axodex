@@ -10,7 +10,7 @@ import path from 'path';
 import { getGlobalDir } from '../../storage/repo-manager.js';
 
 // Sourced from getGlobalDir() so it honors AXODEX_HOME (the Docker image sets
-// AXODEX_HOME=/data/axodex); falls back to ~/.axodex when unset. Wrapped in
+// AXODEX_HOME=/data/axodex); falls back to ~/.fraziym/axodex when unset. Wrapped in
 // path.resolve() for parity with the clone/upload roots (git-clone.ts CLONE_ROOT,
 // upload-paths.ts UPLOAD_ROOT) so a relative AXODEX_HOME still yields an absolute path.
 const MAPPING_FILE = path.resolve(path.join(getGlobalDir(), 'server-mapping.json'));

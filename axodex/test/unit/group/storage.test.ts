@@ -24,7 +24,7 @@ describe('Group storage', () => {
     fs.rmSync(tmpDir, { recursive: true, force: true });
   });
 
-  it('getGroupsBaseDir returns ~/.axodex/groups/', () => {
+  it('getGroupsBaseDir returns ~/.fraziym/axodex/groups/', () => {
     const base = getGroupsBaseDir(tmpDir);
     expect(base).toBe(path.join(tmpDir, 'groups'));
   });

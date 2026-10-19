@@ -22,7 +22,9 @@ Tool call latency: ~50-100ms via eval-server, ~5-10s via CLI fallback.
 import hashlib
 import json
 import logging
+import os
 import shutil
+import sys
 import time
 from pathlib import Path
 
@@ -37,7 +39,22 @@ from utils.errors import is_debug_enabled, log_safe_exception
 
 logger = logging.getLogger("axodex_docker")
 
-DEFAULT_CACHE_DIR = Path.home() / ".axodex-eval-cache"
+def _fraziym_cache_root() -> Path:
+    """Machine-local FRAZIYM cache root (mirrors the TS getFraziymLocalDir policy)."""
+    override = os.environ.get("FRAZIYM_LOCAL")
+    if override:
+        return Path(override)
+    if sys.platform == "win32":
+        local = os.environ.get("LOCALAPPDATA")
+        base = Path(local) if local else Path.home() / "AppData" / "Local"
+        return base / "FRAZIYM"
+    if sys.platform == "darwin":
+        return Path.home() / "Library" / "Caches" / "FRAZIYM"
+    xdg = os.environ.get("XDG_CACHE_HOME")
+    return Path(xdg) / "fraziym" if xdg else Path.home() / ".cache" / "fraziym"
+
+
+DEFAULT_CACHE_DIR = _fraziym_cache_root() / "axodex-eval-cache"
 EVAL_SERVER_PORT = 4848
 EVAL_SERVER_HOST = "127.0.0.1"
 

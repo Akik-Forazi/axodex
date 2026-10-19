@@ -234,7 +234,7 @@ Parse the port as the last colon-segment (`split(':').pop()`) — safe for both 
 
 ### Index caching
 
-SWE-bench repos repeat (Django has 200+ instances at different commits). The harness caches Axodex indexes per `(repo, commit)` hash in `~/.axodex-eval-cache/` to avoid redundant re-indexing.
+SWE-bench repos repeat (Django has 200+ instances at different commits). The harness caches Axodex indexes per `(repo, commit)` hash in the machine-local FRAZIYM cache (`%LOCALAPPDATA%\FRAZIYM\axodex-eval-cache` on Windows, `~/.cache/fraziym/axodex-eval-cache` on Linux; `$FRAZIYM_LOCAL` overrides) to avoid redundant re-indexing.
 
 ### Grep augmentation (native_augment mode)
 

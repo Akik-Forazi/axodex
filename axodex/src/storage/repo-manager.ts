@@ -5,7 +5,7 @@
  * - Per-repo metadata file (axodex.json) under .axodex/, dual-written to a
  *   legacy meta.json mirror for backward compatibility (see MIGRATION.md)
  * - .axodex/ directory for local metadata and caches (parse-cache, parsedfile-store)
- * - Global registry at ~/.axodex/registry.json for MCP server discovery
+ * - Global registry at ~/.fraziym/axodex/registry.json for MCP server discovery
  *
  * axodex.json is simply a filename distinct from the generic meta.json — it
  * has no bearing on git worktree behavior. .axodex/ remains fully git-ignored
@@ -148,7 +148,7 @@ export const registryPathEquals = (a: string, b: string): boolean =>
 /**
  * Does the clone dir derived from an entry's *name* actually belong to that
  * entry? Registry names are not unique across storage locations: a cloned
- * repo under `~/.axodex/repos/<name>` and a local repo registered under the
+ * repo under `~/.fraziym/axodex/repos/<name>` and a local repo registered under the
  * same name share a `getCloneDir(entry.name)` result. The server's delete
  * handler must therefore never remove the clone dir based on the name alone —
  * only when the entry's own `path` resolves to that dir (mirroring its step-2b
@@ -168,7 +168,7 @@ export interface IndexedRepo {
 }
 
 /**
- * Shape of an entry in the global registry (~/.axodex/registry.json)
+ * Shape of an entry in the global registry (~/.fraziym/axodex/registry.json)
  */
 export interface RegistryEntry {
   name: string;
@@ -561,7 +561,7 @@ const ensureGitInfoExclude = async (repoPath: string): Promise<void> => {
   }
 };
 
-// ─── Global Registry (~/.axodex/registry.json) ───────────────────────
+// ─── Global Registry (~/.fraziym/axodex/registry.json) ───────────────────────
 
 /**
  * Get the path to the global registry file
@@ -1461,7 +1461,7 @@ export class RegistryAmbiguousTargetError extends Error {
 /**
  * Thrown by {@link assertAnalysisFinalized} when a successful `analyze`
  * run did not actually persist the index metadata file or did not register
- * the repo in `~/.axodex/registry.json` (#1169).
+ * the repo in `~/.fraziym/axodex/registry.json` (#1169).
  *
  * Why this exists: on Windows, `axodex analyze` has been observed to
  * exit cleanly (code 0) with `lbug.wal` written but no metadata file,
@@ -1581,7 +1581,7 @@ export class UnsafeStoragePathError extends Error {
         `"${expectedStoragePath}" under the repo's .axodex subfolder, ` +
         `but the registry entry has "${actualStoragePath}". ` +
         `This usually means the registry entry is corrupted or was ` +
-        `hand-edited. Delete the entry manually from ~/.axodex/registry.json ` +
+        `hand-edited. Delete the entry manually from ~/.fraziym/axodex/registry.json ` +
         `and re-run analyze.`,
     );
     this.name = 'UnsafeStoragePathError';
@@ -1597,7 +1597,7 @@ export class UnsafeStoragePathError extends Error {
  * metadata before a recursive deletion is allowed.
  *
  * Why this exists (#1003 review — @magyargergo):
- *   - `~/.axodex/registry.json` is a plain-text user-writable file.
+ *   - `~/.fraziym/axodex/registry.json` is a plain-text user-writable file.
  *     A corrupted, hand-edited, or downgrade/upgrade-racing entry
  *     could plausibly end up with `storagePath === ""` (resolves to
  *     cwd), `storagePath === path` (the repo root!), `storagePath`
@@ -1813,7 +1813,7 @@ export const listRegisteredRepos = async (opts?: {
   return valid;
 };
 
-// ─── Global CLI Config (~/.axodex/config.json) ─────────────────────────
+// ─── Global CLI Config (~/.fraziym/axodex/config.json) ─────────────────────────
 
 export interface CLIConfig {
   apiKey?: string;
@@ -1849,7 +1849,7 @@ export const getGlobalConfigPath = (): string => {
 };
 
 /**
- * Load CLI config from ~/.axodex/config.json
+ * Load CLI config from ~/.fraziym/axodex/config.json
  */
 export const loadCLIConfig = async (): Promise<CLIConfig> => {
   try {
@@ -1861,7 +1861,7 @@ export const loadCLIConfig = async (): Promise<CLIConfig> => {
 };
 
 /**
- * Save CLI config to ~/.axodex/config.json
+ * Save CLI config to ~/.fraziym/axodex/config.json
  */
 export const saveCLIConfig = async (config: CLIConfig): Promise<void> => {
   const dir = getGlobalDir();

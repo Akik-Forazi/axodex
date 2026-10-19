@@ -254,7 +254,7 @@ const wikiCommandImpl = async (inputPath?: string, options?: WikiCommandOptions)
       }
     }
     await saveCLIConfig({ ...existing, ...updates });
-    console.log('  Config saved to ~/.axodex/config.json\n');
+    console.log('  Config saved to ~/.fraziym/axodex/config.json\n');
   }
 
   const savedConfig = await loadCLIConfig();
@@ -381,7 +381,7 @@ const wikiCommandImpl = async (inputPath?: string, options?: WikiCommandOptions)
         const localConfig = { ...savedConfig, provider };
         if (model) (localConfig as Record<string, unknown>)[localModelConfigKey(provider)] = model;
         await saveCLIConfig(localConfig);
-        console.log('  Config saved to ~/.axodex/config.json\n');
+        console.log('  Config saved to ~/.fraziym/axodex/config.json\n');
 
         llmConfig = { ...llmConfig, provider, model, apiKey: '', baseUrl: '' };
       } else if (choice === '3') {
@@ -437,7 +437,7 @@ const wikiCommandImpl = async (inputPath?: string, options?: WikiCommandOptions)
           model: deploymentName,
           provider: 'azure',
         });
-        console.log('  Config saved to ~/.axodex/config.json\n');
+        console.log('  Config saved to ~/.fraziym/axodex/config.json\n');
 
         llmConfig = {
           ...llmConfig,
@@ -517,7 +517,7 @@ const wikiCommandImpl = async (inputPath?: string, options?: WikiCommandOptions)
           apiVersion: undefined,
           isReasoningModel: undefined,
         });
-        console.log('  Config saved to ~/.axodex/config.json\n');
+        console.log('  Config saved to ~/.fraziym/axodex/config.json\n');
 
         llmConfig = { ...llmConfig, apiKey: key, baseUrl, model, provider };
       }

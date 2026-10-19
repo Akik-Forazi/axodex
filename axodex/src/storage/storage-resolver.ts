@@ -149,7 +149,7 @@ export class StorageDeletionError extends Error {
         `Expected "${expectedStoragePath}" or an externally owned index, ` +
         `but the registry entry has "${actualStoragePath}". ` +
         `This usually means the registry entry is corrupted or was hand-edited. ` +
-        `Delete the entry manually from ~/.axodex/registry.json and re-run analyze.`,
+        `Delete the entry manually from ~/.fraziym/axodex/registry.json and re-run analyze.`,
     );
     this.name = 'StorageDeletionError';
   }

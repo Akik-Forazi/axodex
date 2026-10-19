@@ -39,8 +39,8 @@ import { EventEmitter } from 'node:events';
 import { getRemoteOriginUrl } from '../../src/storage/git.js';
 import { getGlobalDir } from '../../src/storage/repo-manager.js';
 
-// CLONE_ROOT now derives from getGlobalDir() (AXODEX_HOME || ~/.axodex), so
-// assertions must mirror that derivation rather than hardcoding ~/.axodex —
+// CLONE_ROOT now derives from getGlobalDir() (AXODEX_HOME || ~/.fraziym/axodex), so
+// assertions must mirror that derivation rather than hardcoding ~/.fraziym/axodex —
 // otherwise an ambient AXODEX_HOME (e.g. a CI runner that sets it) makes the
 // "direct child of the clone root" assertions fail. We call getGlobalDir()
 // directly (the same function production CLONE_ROOT uses) so the test cannot
@@ -97,7 +97,7 @@ describe('git-clone', () => {
 
     it('rejects URLs whose last segment is "..": prevents getCloneDir traversal escape', () => {
       // Without the safe-name pattern, a URL ending in `/..` would yield
-      // `getCloneDir('..')` = `~/.axodex/repos/..` = `~/.axodex/`, breaking
+      // `getCloneDir('..')` = `~/.fraziym/axodex/repos/..` = `~/.fraziym/axodex/`, breaking
       // out of the intended clone root.
       expect(() => extractRepoName('https://github.com/owner/repo:..')).toThrow(
         'valid repository name',

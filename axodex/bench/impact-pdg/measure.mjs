@@ -37,7 +37,7 @@
  *      `registerRepo` land in the temp home);
  *   3. `new LocalBackend(); await init()` resolves the fixture via the REAL
  *      registry (the parent process ALSO sets `AXODEX_HOME` so init reads the
- *      temp registry, not the user's ~/.axodex);
+ *      temp registry, not the user's ~/.fraziym/axodex);
  *   4. `callTool('impact', …)` ×2 — callgraph (symbol BFS) and pdg (seeded on
  *      `line: criterion.line` so it returns the statement-anchored slice);
  *   5. teardown the temp home + copy.

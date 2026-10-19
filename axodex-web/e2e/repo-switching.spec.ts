@@ -158,7 +158,7 @@ test.describe('Windows path normalization', () => {
     page,
   }) => {
     const repoName = firstRepoName || 'test-repo';
-    const windowsPath = `C:\\Users\\LENOVO\\.axodex\\repos\\${repoName}`;
+    const windowsPath = `C:\\Users\\LENOVO\\.fraziym\\axodex\\repos\\${repoName}`;
 
     // Mock /api/repo to return a Windows backslash path while keeping name correct
     await page.route(/\/api\/repo(?!s)(\?.*)?$/, (route) =>

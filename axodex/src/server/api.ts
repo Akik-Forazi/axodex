@@ -1346,7 +1346,7 @@ export const createServer = async (port: number, host: string = '127.0.0.1') => 
         }
         await reclaimAfterSlotRemoval(storagePath);
 
-        // 2. Delete the cloned repo dir if it lives under ~/.axodex/repos/.
+        // 2. Delete the cloned repo dir if it lives under ~/.fraziym/axodex/repos/.
         // getCloneDir now throws on names that are not filesystem-safe (e.g.
         // local repos registered with names like "my project" or "org/repo").
         // Such repos legitimately have no clone dir, so treat the rejection as

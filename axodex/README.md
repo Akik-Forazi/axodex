@@ -455,7 +455,7 @@ that skip — including at `0`.
 
 ## Multi-Repo Support
 
-Axodex supports indexing multiple repositories. Each `axodex analyze` registers the repo in a global registry (`~/.axodex/registry.json`). The MCP server serves all indexed repos automatically.
+Axodex supports indexing multiple repositories. Each `axodex analyze` registers the repo in a global registry (`~/.fraziym/axodex/registry.json`). The MCP server serves all indexed repos automatically.
 
 ## Supported Languages
 
@@ -686,7 +686,7 @@ npm install -g axodex
 
 `onnxruntime-node`'s postinstall downloads optional CUDA GPU binaries from `api.nuget.org` — outside the npm registry, so registry mirrors don't cover it, and its proxy layer (`global-agent`) ignores the standard `HTTP_PROXY`/`HTTPS_PROXY` variables and rejects 302 redirects ([#2370](https://github.com/Akik-Forazi/axodex/issues/2370)).
 
-Default `npm install -g axodex` no longer fetches the embedding stack. **Opt in on demand**: the first `axodex analyze --embeddings` (or an explicit `axodex embeddings install`) fetches it through your configured npm registry — mirrors and proxies apply, no NuGet download involved — into `~/.axodex/embedding-runtime`. A leftover 1.6.12 package-first tree in axodex `node_modules` is residual until a clean reinstall; `--force` only refreshes prefix overrides.
+Default `npm install -g axodex` no longer fetches the embedding stack. **Opt in on demand**: the first `axodex analyze --embeddings` (or an explicit `axodex embeddings install`) fetches it through your configured npm registry — mirrors and proxies apply, no NuGet download involved — into the machine-local FRAZIYM cache (`%LOCALAPPDATA%\FRAZIYM\axodex\embedding-runtime`). A leftover 1.6.12 package-first tree in axodex `node_modules` is residual until a clean reinstall; `--force` only refreshes prefix overrides.
 
 ```bash
 # heal a proxy-degraded install manually (CPU embeddings; registry-only)
@@ -699,7 +699,7 @@ axodex embeddings install --force
 GLOBAL_AGENT_HTTPS_PROXY=<proxy-url> axodex embeddings install --cuda
 ```
 
-The prefix defaults to `~/.axodex/embedding-runtime`; set `AXODEX_EMBEDDING_RUNTIME_DIR` to install it elsewhere (e.g. a writable path in a container).
+The prefix defaults to the machine-local `%LOCALAPPDATA%\FRAZIYM\axodex\embedding-runtime`; set `AXODEX_EMBEDDING_RUNTIME_DIR` to install it elsewhere (e.g. a writable path in a container).
 
 > **Node requirement for the on-demand prefix:** the prefix loads via `module.registerHooks`, available on Node **≥ 22.15** (on the 22.x line) or **≥ 23.5** (on the 23.x line). On an older Node the packages install but can't be loaded from the prefix — upgrade Node, then run `axodex embeddings install`. Check the result any time with `axodex doctor` (Embeddings → Support line).
 
@@ -946,7 +946,7 @@ only — the hook's structured stdout (the JSON the agent consumes) is unaffecte
 - All processing happens locally on your machine
 - No code is sent to any server
 - Index stored in `.axodex/` inside your repo by default (gitignored), in the complete external directory selected by `AXODEX_STORAGE_PATH`, or in a repository-specific slot beneath `AXODEX_STORAGE_ROOT`
-- Global registry at `~/.axodex/` stores only paths and metadata
+- Global registry at `~/.fraziym/axodex/` stores only paths and metadata
 
 ## Web UI
 

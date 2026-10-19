@@ -15,7 +15,7 @@ Monorepo: **CLI/MCP** (`axodex/`) + **browser UI** (`axodex-web/`).
 
 ## End-to-end flow: index → graph → tools
 
-1. **Ingestion** — `analyze.ts` → `runFullAnalysis` (`run-analyze.ts`) → `runPipelineFromRepo` (`pipeline.ts`). The default DAG of 19 phases builds a `KnowledgeGraph` in memory, then loads into LadybugDB under `.axodex/`. Repo registered in `~/.axodex/registry.json` for MCP discovery.
+1. **Ingestion** — `analyze.ts` → `runFullAnalysis` (`run-analyze.ts`) → `runPipelineFromRepo` (`pipeline.ts`). The default DAG of 19 phases builds a `KnowledgeGraph` in memory, then loads into LadybugDB under `.axodex/`. Repo registered in `~/.fraziym/axodex/registry.json` for MCP discovery.
 
 2. **Persistence** — `repo-manager.ts` (paths, registry, LadybugDB cleanup). `lbug-adapter.ts` (graph load, queries, embedding batches).
 
@@ -490,7 +490,7 @@ CLI (analyze.ts) → runFullAnalysis(repoPath, options, callbacks)
   ├── axodex.json  # lastCommit, indexedAt, stats (primary metadata file)
   └── meta.json      # legacy mirror of axodex.json, kept in sync (see MIGRATION.md)
 
-~/.axodex/
+~/.fraziym/axodex/
   ├── registry.json  # Global repo registry (MCP discovery)
   └── stores/<key>/  # Shared sibling index store (see below)
       ├── caches/                         # parse cache + durable ParsedFile store

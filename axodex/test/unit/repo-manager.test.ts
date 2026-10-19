@@ -737,7 +737,7 @@ describe('ensureAxodexIgnored (#1233)', () => {
 
 describe('readRegistry', () => {
   it('returns empty array when registry does not exist', async () => {
-    // readRegistry reads from ~/.axodex/registry.json
+    // readRegistry reads from ~/.fraziym/axodex/registry.json
     // If the file doesn't exist, it should return []
     // This test exercises the catch path
     const result = await readRegistry();
@@ -865,7 +865,7 @@ describe('API key file permissions', () => {
 // Each test isolates the global registry by pointing AXODEX_HOME at a
 // per-test tmpdir. `getGlobalDir()` honors that env var, so registerRepo
 // writes/reads a sandboxed registry.json without touching the user's
-// real ~/.axodex.
+// real ~/.fraziym/axodex.
 
 describe('registerRepo name override + collision guard (#829)', () => {
   let tmpHome: Awaited<ReturnType<typeof createTempDir>>;
@@ -1109,7 +1109,7 @@ describe('registerRepo name override + collision guard (#829)', () => {
 
   it('registers while an index lock is held on the global directory (#2716)', async () => {
     // A repo rooted at the user's home directory makes the per-repo analyze
-    // lock target `~/.axodex` — the very directory the registry lock would
+    // lock target `~/.fraziym/axodex` — the very directory the registry lock would
     // take if it shared that namespace. `runFullAnalysis` holds the per-repo
     // lock across its call to `registerRepo` and `acquireIndexLock` is not
     // reentrant, so a shared namespace self-deadlocks until the wait ceiling
@@ -1647,7 +1647,7 @@ describe('getInferredRepoName + registerRepo (#979 — git remote inference)', (
 //
 // The resolver is a pure function over a `RegistryEntry[]` snapshot, so
 // these tests build synthetic entries inline and do NOT touch
-// ~/.axodex. No AXODEX_HOME sandboxing needed. This also means the
+// ~/.fraziym/axodex. No AXODEX_HOME sandboxing needed. This also means the
 // tests are platform-portable on Windows where realpath semantics on
 // tmpdirs can diverge between runs (see the #955 CI pivot).
 
@@ -1912,7 +1912,7 @@ describe('resolveRegistryEntry backward-compat with non-canonical stored paths (
 // ─── assertSafeStoragePath (#1003 review — @magyargergo) ─────────────
 //
 // Guard rail against destroying more than the `.axodex/` subfolder.
-// `~/.axodex/registry.json` is user-writable plain text, so a
+// `~/.fraziym/axodex/registry.json` is user-writable plain text, so a
 // corrupted or hand-edited entry could put storagePath anywhere.
 // Repository-local paths remain pure string checks. External slots require
 // metadata ownership proof before they may be recursively deleted.

@@ -1,7 +1,7 @@
-import os from 'node:os';
 import { join } from 'node:path';
 
 import { CircuitBreaker, withRetry } from 'axodex-shared';
+import { getFraziymLocalDir } from '../../storage/global-dir.js';
 
 // ---------------------------------------------------------------------------
 // Download resilience defaults
@@ -63,7 +63,7 @@ export interface HfEnvSubset {
  * bridges so every axodex embedder entry point (the analyze pipeline
  * and the MCP server) behaves identically.
  *
- * - **`HF_HOME`** → `env.cacheDir` (default: `~/.cache/huggingface`).
+ * - **`HF_HOME`** → `env.cacheDir` (default: `<FRAZIYM_LOCAL>/axodex/huggingface`).
  *   transformers.js otherwise defaults to `./node_modules/.cache` inside
  *   its own install dir, which is unwritable when axodex is installed
  *   globally (e.g. `/usr/lib/node_modules/`).
@@ -85,7 +85,7 @@ export interface HfEnvSubset {
  * call site a single line at each entry point.
  */
 export function applyHfEnvOverrides(env: HfEnvSubset): void {
-  env.cacheDir = process.env.HF_HOME ?? join(os.homedir(), '.cache', 'huggingface');
+  env.cacheDir = process.env.HF_HOME ?? join(getFraziymLocalDir(), 'axodex', 'huggingface');
   // `.trim()` guards against the common copy-paste failure mode of
   // `HF_ENDPOINT="  https://hf-mirror.com  "` (leading/trailing whitespace
   // from shell scripts or docs) — without it, a whitespace-only value

@@ -129,7 +129,7 @@ function runCliRaw(extraArgs: string[], cwd: string, timeoutMs = 15000) {
 /**
  * Like runCliRaw but accepts extra env vars. Used by tests that need to
  * isolate the global registry via AXODEX_HOME so they don't touch the
- * developer / CI agent's real ~/.axodex/registry.json (#829).
+ * developer / CI agent's real ~/.fraziym/axodex/registry.json (#829).
  */
 function runCliWithEnv(
   extraArgs: string[],
@@ -467,7 +467,7 @@ describe('CLI end-to-end', () => {
   // ─── analyze --name <alias> + --allow-duplicate-name (#829) ──────
   //
   // End-to-end regression guard for the name-collision feature:
-  //   1. `analyze --name X` persists the alias to ~/.axodex/registry.json
+  //   1. `analyze --name X` persists the alias to ~/.fraziym/axodex/registry.json
   //   2. A second `analyze --name X` on a DIFFERENT path is rejected with
   //      a collision error (exit code 1, "already used" in output)
   //   3. `analyze --name X --allow-duplicate-name` bypasses the guard;
@@ -496,7 +496,7 @@ describe('CLI end-to-end', () => {
 
     it('--name alias stores; collision rejects; --allow-duplicate-name bypasses', () => {
       // Isolate the global registry so this test never touches the
-      // developer's real ~/.axodex.
+      // developer's real ~/.fraziym/axodex.
       const gnHome = fs.mkdtempSync(path.join(os.tmpdir(), 'gn-home-'));
 
       // Two mini-repo copies whose basenames intentionally collide.
@@ -832,7 +832,7 @@ describe('CLI end-to-end', () => {
 
     it('refuses to proceed when a registry entry points storagePath outside <repo>/.axodex (#1003)', () => {
       // Regression guard for the safety gap flagged by @magyargergo on
-      // PR #1003: `~/.axodex/registry.json` is a user-writable JSON
+      // PR #1003: `~/.fraziym/axodex/registry.json` is a user-writable JSON
       // file, so a corrupted or hand-edited entry could point
       // storagePath at the repo root (catastrophic: rm the working
       // tree) or at any other arbitrary path. `remove --force` must

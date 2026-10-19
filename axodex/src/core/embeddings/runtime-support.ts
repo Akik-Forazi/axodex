@@ -105,7 +105,7 @@ export const localEmbeddingStackMissingMessage = (): string =>
     '',
     'To enable local embeddings:',
     '  - Run `axodex embeddings install` — fetches the stack through your npm',
-    '    registry config into ~/.axodex/embedding-runtime (or',
+    '    registry config into <FRAZIYM_LOCAL>/axodex/embedding-runtime (or',
     '    AXODEX_EMBEDDING_RUNTIME_DIR when set; mirrors and proxies',
     '    apply; no NuGet download). `axodex analyze --embeddings` and',
     '    `axodex embeddings sync` do this automatically.',

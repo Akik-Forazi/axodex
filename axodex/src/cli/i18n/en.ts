@@ -295,7 +295,7 @@ export const en = {
   'help.option.skipGit':
     'Treat the provided path/cwd as the index root and skip parent git-root discovery',
   'help.option.analyze.name':
-    'Register this repo under a custom name in ~/.axodex/registry.json (disambiguates repos whose paths share a basename, e.g. two different .../app folders)',
+    'Register this repo under a custom name in ~/.fraziym/axodex/registry.json (disambiguates repos whose paths share a basename, e.g. two different .../app folders)',
   'help.option.analyze.allowDuplicateName':
     'Register this repo even if another path already uses the same --name alias. Leaves `-r <name>` ambiguous for the two paths; use -r <path> to disambiguate.',
   'help.option.analyze.shareWith':
@@ -353,7 +353,7 @@ export const en = {
   'help.option.wiki.model': 'LLM model or deployment name (default: MiniMax-M3)',
   'help.option.wiki.baseUrl':
     'LLM API base URL. Azure v1: https://{resource}.openai.azure.com/openai/v1',
-  'help.option.wiki.apiKey': 'LLM API key or Azure api-key (saved to ~/.axodex/config.json)',
+  'help.option.wiki.apiKey': 'LLM API key or Azure api-key (saved to ~/.fraziym/axodex/config.json)',
   'help.option.wiki.apiVersion':
     'Azure api-version query param, e.g. 2024-10-21 (legacy Azure API only)',
   'help.option.wiki.reasoningModel': 'Enable reasoning mode; MiniMax-M3 uses adaptive thinking',

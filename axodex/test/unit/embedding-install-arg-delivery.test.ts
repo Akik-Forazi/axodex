@@ -94,7 +94,7 @@ describe('embedding-install arg delivery — real spawn round-trip (#2372)', () 
     // scheme neutralizes them.)
     const intended = [
       '--prefix',
-      'C:\\Users\\John Doe\\.axodex\\embedding-runtime', // whitespace (+ backslashes)
+      'C:\\Users\\John Doe\\AppData\\Local\\FRAZIYM\\axodex\\embedding-runtime', // whitespace (+ backslashes)
       '@huggingface/transformers@^4.1.0', // caret in a semver range
       'C:\\Users\\John Doe\\rt\\', // trailing backslash + whitespace
       'a&b|c<d>e(f)', // shell metacharacters

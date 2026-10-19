@@ -36,7 +36,7 @@
  *   `tools/list` path over the old `listRepos()` hot path. Restoring
  *   `listRepos()` on schema introspection collapses this toward 1+.
  *
- * Isolated `AXODEX_HOME` — never touches `~/.axodex`. Also clears
+ * Isolated `AXODEX_HOME` — never touches `~/.fraziym/axodex`. Also clears
  * `AXODEX_MCP_ALLOWED_REPOS`, `AXODEX_MCP_DEFAULT_REPO`, and
  * `AXODEX_MCP_READ_ONLY` so the invoking shell cannot shrink the roster.
  * Each fixture row is a real git repo whose `lastCommit` matches HEAD, so

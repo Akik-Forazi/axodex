@@ -4,7 +4,7 @@
  * Delete the `.axodex/` index directory for a registered repo (including
  * both metadata filenames — axodex.json and its legacy meta.json mirror —
  * which live inside it) and unregister it from the global registry
- * (~/.axodex/registry.json).
+ * (~/.fraziym/axodex/registry.json).
  *
  * The target is identified by alias / basename-derived name / remote-inferred name /
  * absolute path — no `--repo` flag, just a positional argument so the

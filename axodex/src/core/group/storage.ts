@@ -127,7 +127,7 @@ matching:
   }
   // `'wx'` rejects a pre-planted symlink at the path; `0o600` is
   // user-only (no group/world bits) — axodex storage is per-user
-  // (`~/.axodex/...`), so any "other user wants to read this" case is
+  // (`~/.fraziym/axodex/...`), so any "other user wants to read this" case is
   // a misconfiguration, not a feature. Keeping the file user-only also
   // satisfies CodeQL's `isSecureMode` predicate (low 6 bits == 0) and
   // closes the js/insecure-temporary-file alert at this site.

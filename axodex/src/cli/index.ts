@@ -138,7 +138,7 @@ program
   )
   .option(
     '--name <alias>',
-    'Register this repo under a custom name in ~/.axodex/registry.json ' +
+    'Register this repo under a custom name in ~/.fraziym/axodex/registry.json ' +
       '(disambiguates repos whose paths share a basename, e.g. two different .../app folders)',
   )
   .option(
@@ -417,7 +417,7 @@ program
     '--base-url <url>',
     'LLM API base URL. Azure v1: https://{resource}.openai.azure.com/openai/v1',
   )
-  .option('--api-key <key>', 'LLM API key or Azure api-key (saved to ~/.axodex/config.json)')
+  .option('--api-key <key>', 'LLM API key or Azure api-key (saved to ~/.fraziym/axodex/config.json)')
   .option(
     '--api-version <version>',
     'Azure api-version query param, e.g. 2024-10-21 (legacy Azure API only)',

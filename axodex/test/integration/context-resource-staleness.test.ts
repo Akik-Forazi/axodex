@@ -61,7 +61,7 @@ describe('context resource freshness — out-of-process analyze (#2438)', () => 
     tmpDir = await createTempDir('gnx-ctx-staleness-');
     repoPath = tmpDir.dbPath;
 
-    // Isolate the global registry from the developer's real ~/.axodex
+    // Isolate the global registry from the developer's real ~/.fraziym/axodex
     savedHome = process.env.AXODEX_HOME;
     process.env.AXODEX_HOME = path.join(repoPath, '.axodex-home');
     storagePath = getStoragePaths(repoPath).storagePath;

@@ -8,7 +8,7 @@
  *   - Config is repo-local (`.axodexrc` at the resolved repo root). It is NOT
  *     read from `.axodex/` because that directory is index storage and is
  *     commonly gitignored.
- *   - JSON only. No YAML, no `package.json` field, no global `~/.axodex` file
+ *   - JSON only. No YAML, no `package.json` field, no global `~/.fraziym/axodex` file
  *     in this pass.
  *   - CLI flags always override config (see {@link mergeAnalyzeOptions}).
  *   - Fail closed: unknown keys, wrong value types, conflicting aliases, and

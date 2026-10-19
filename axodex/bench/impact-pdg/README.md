@@ -238,7 +238,7 @@ analyze via a temp `AXODEX_HOME`, mock-free**. Per fixture:
    ```
 3. `new LocalBackend(); await init()` resolves the fixture via the **real**
    registry (the parent process sets `AXODEX_HOME` too, so `init()` reads the
-   temp registry, not `~/.axodex`).
+   temp registry, not `~/.fraziym/axodex`).
 4. `callTool('impact', …)` ×2 (the absolute path is a tier-1 path match — no
    name collision): once `mode:'callgraph'` (symbol BFS), once `mode:'pdg'` with
    `line: criterion.line` so it returns the **statement-anchored slice**

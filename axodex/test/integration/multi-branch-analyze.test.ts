@@ -29,7 +29,7 @@ describe('multi-branch analyze (#2106)', () => {
 
   beforeEach(async () => {
     // Isolate the global registry so the full analyze runs below don't write
-    // to the developer's real ~/.axodex/registry.json.
+    // to the developer's real ~/.fraziym/axodex/registry.json.
     tmpHome = await createTempDir('axodex-multibranch-home-');
     savedAxodexHome = process.env.AXODEX_HOME;
     process.env.AXODEX_HOME = tmpHome.dbPath;

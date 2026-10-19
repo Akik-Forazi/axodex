@@ -21,7 +21,7 @@ import { getGlobalDir } from '../storage/repo-manager.js';
  *
  * Sourced from getGlobalDir() so it honors AXODEX_HOME and stays a sibling of
  * the clone root on the same (in Docker, persistent) volume. Falls back to
- * ~/.axodex when the env var is unset.
+ * ~/.fraziym/axodex when the env var is unset.
  */
 export const UPLOAD_ROOT = path.resolve(path.join(getGlobalDir(), 'uploads'));
 

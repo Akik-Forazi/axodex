@@ -92,7 +92,7 @@ export function resolveMiniMaxThinkingMode(
 
 /**
  * Resolve LLM configuration from env vars, saved config, and optional overrides.
- * Priority: overrides (CLI flags) > env vars > ~/.axodex/config.json > error
+ * Priority: overrides (CLI flags) > env vars > ~/.fraziym/axodex/config.json > error
  *
  * If no API key is found, returns config with empty apiKey (caller should handle).
  */

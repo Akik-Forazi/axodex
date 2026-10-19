@@ -1,5 +1,4 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import os from 'node:os';
 import { join } from 'node:path';
 import { CircuitBreaker } from 'axodex-shared';
 import {
@@ -15,6 +14,7 @@ import {
   HF_MAX_ATTEMPTS_CAP,
   type HfEnvSubset,
 } from '../../src/core/embeddings/hf-env.js';
+import { getFraziymLocalDir } from '../../src/storage/global-dir.js';
 
 describe('applyHfEnvOverrides', () => {
   let envStub: HfEnvSubset;
@@ -39,9 +39,9 @@ describe('applyHfEnvOverrides', () => {
     else process.env.HF_ENDPOINT = originalHfEndpoint;
   });
 
-  it('cacheDir defaults to ~/.cache/huggingface when HF_HOME is unset', () => {
+  it('cacheDir defaults to the T2 axodex huggingface dir when HF_HOME is unset', () => {
     applyHfEnvOverrides(envStub);
-    expect(envStub.cacheDir).toBe(join(os.homedir(), '.cache', 'huggingface'));
+    expect(envStub.cacheDir).toBe(join(getFraziymLocalDir(), 'axodex', 'huggingface'));
   });
 
   it('cacheDir respects HF_HOME when set', () => {

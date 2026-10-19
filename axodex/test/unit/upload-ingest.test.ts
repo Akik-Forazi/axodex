@@ -117,7 +117,7 @@ function mockReq(body: Buffer, headers: Record<string, string>): IncomingMessage
 
 describe('ingestUpload', () => {
   // Each test gets its own staging parent (via the IngestOptions root override)
-  // so assertions never read the shared global ~/.axodex/uploads, which other
+  // so assertions never read the shared global ~/.fraziym/axodex/uploads, which other
   // upload test files mutate concurrently under vitest's parallel forks.
   let root: string;
   beforeEach(async () => {

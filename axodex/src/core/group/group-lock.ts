@@ -18,7 +18,7 @@
  * at a directory that some other code path might also lock — or that already
  * holds a per-repo index slot — reintroduces exactly the collision the registry
  * lock's own comment warns about. `<groupDir>/sync-lock` is a namespace nothing
- * else claims: group directories live under `~/.axodex/groups/<name>` (or
+ * else claims: group directories live under `~/.fraziym/axodex/groups/<name>` (or
  * `$AXODEX_HOME`), never under a repo's `.axodex[/branches/<slug>]`.
  *
  * WHY IT FAILS CLOSED, like the registry lock. `withRegistryLock` also

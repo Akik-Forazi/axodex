@@ -75,7 +75,7 @@ Deletes the `.axodex/` directory and unregisters the repo from the global regist
 node .axodex/run.cjs wiki
 ```
 
-Generates repository documentation from the knowledge graph using an LLM. HTTP providers require an API key (saved to `~/.axodex/config.json` on first use). Local CLI providers (`--provider cursor|claude|codex|opencode|grok`) use your existing CLI login.
+Generates repository documentation from the knowledge graph using an LLM. HTTP providers require an API key (saved to `~/.fraziym/axodex/config.json` on first use). Local CLI providers (`--provider cursor|claude|codex|opencode|grok`) use your existing CLI login.
 
 | Flag                | Effect                                    |
 | ------------------- | ----------------------------------------- |
@@ -96,7 +96,7 @@ Generates repository documentation from the knowledge graph using an LLM. HTTP p
 node .axodex/run.cjs list
 ```
 
-Lists all repositories registered in `~/.axodex/registry.json`. The MCP `list_repos` tool provides the same information.
+Lists all repositories registered in `~/.fraziym/axodex/registry.json`. The MCP `list_repos` tool provides the same information.
 
 ## After Indexing
 

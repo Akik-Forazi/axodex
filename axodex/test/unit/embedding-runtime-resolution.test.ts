@@ -52,7 +52,7 @@ async function loadWithTiers(pkg: Record<string, string>, prefix: Record<string,
     return {
       ...orig,
       createRequire: (from: string | URL) =>
-        toPosix(String(from)) === `${PREFIX}/noop.js` ? prefixRequire : packageRequire,
+        toPosix(String(from)).endsWith(`${PREFIX}/noop.js`) ? prefixRequire : packageRequire,
     };
   });
   const runtimeInstall = await import(RUNTIME_INSTALL);
@@ -121,7 +121,7 @@ async function loadWithHook(pkg: Record<string, string>, prefix: Record<string, 
       ...orig,
       registerHooks: spy,
       createRequire: (from: string | URL) =>
-        toPosix(String(from)) === `${PREFIX}/noop.js` ? prefixRequire : packageRequire,
+        toPosix(String(from)).endsWith(`${PREFIX}/noop.js`) ? prefixRequire : packageRequire,
     };
   });
   const runtimeInstall = await import(RUNTIME_INSTALL);
@@ -229,7 +229,7 @@ describe('ensureEmbeddingStackResolvable — onnxruntime-common source gate', ()
         ...orig,
         registerHooks: spy,
         createRequire: (from: string | URL) =>
-          toPosix(String(from)) === `${PREFIX}/noop.js` ? prefixRequire : packageRequire,
+          toPosix(String(from)).endsWith(`${PREFIX}/noop.js`) ? prefixRequire : packageRequire,
       };
     });
     const runtimeInstall = await import(RUNTIME_INSTALL);

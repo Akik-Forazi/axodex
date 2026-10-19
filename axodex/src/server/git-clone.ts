@@ -32,8 +32,8 @@ export { validateGitUrl };
  * Sourced from getGlobalDir() so it honors AXODEX_HOME — the Docker image sets
  * AXODEX_HOME=/data/axodex, the persistent volume that also holds the
  * registry and indexes. Without this, clones landed in the container's
- * ephemeral ~/.axodex/repos and were lost on container recreation while the
- * registry still pointed at the dead path. Falls back to ~/.axodex when the
+ * ephemeral ~/.fraziym/axodex/repos and were lost on container recreation while the
+ * registry still pointed at the dead path. Falls back to ~/.fraziym/axodex when the
  * env var is unset (CLI / local installs), matching the prior behavior exactly.
  */
 const CLONE_ROOT = path.resolve(path.join(getGlobalDir(), 'repos'));
@@ -374,7 +374,7 @@ export async function getRemoteOriginUrl(cwd: string, timeoutMs?: number): Promi
  * Closes the wrong-repo silent-analysis vector that Codex's adversarial
  * review on PR #1325 surfaced: clone dirs are keyed by URL basename, so a
  * request for `https://gitlab.example/attacker/repo.git` would otherwise
- * collide with an existing `~/.axodex/repos/repo` cloned from a different
+ * collide with an existing `~/.fraziym/axodex/repos/repo` cloned from a different
  * origin and `git pull --ff-only` would silently succeed against the wrong
  * remote.
  *
@@ -524,7 +524,7 @@ async function fetchAndCheckoutRequestedBranch(
  *     `overwriteLocalChanges` is set.
  *
  * Security:
- *   - targetDir must resolve inside CLONE_ROOT (~/.axodex/repos/). The
+ *   - targetDir must resolve inside CLONE_ROOT (~/.fraziym/axodex/repos/). The
  *     path.relative containment barrier below is the inline canonical idiom
  *     CodeQL's js/path-injection sanitizer recognizes.
  *   - validateGitUrl runs unconditionally on the requested URL — both the

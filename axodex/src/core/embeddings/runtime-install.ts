@@ -5,7 +5,8 @@
  * no longer optionalDependencies. Default `npm install` does not fetch them.
  * Operators opt in with `axodex embeddings install` (or analyze/sync auto-heal),
  * which writes a prefix `package.json` (pins + overrides) and installs into
- * `$AXODEX_HOME/embedding-runtime` (default `~/.fraziym/axodex/embedding-runtime`).
+ * `<FRAZIYM_LOCAL>/axodex/embedding-runtime` (override
+ * `AXODEX_EMBEDDING_RUNTIME_DIR`; this is machine-local state, T2).
  * Version pins live in package.json
  * `axodexEmbeddingStack` so they ship in the tarball without installing the
  * packages. `onnxruntime-common` stays a regular dependency (#307).
@@ -22,7 +23,7 @@ import { pathToFileURL } from 'node:url';
 import { homedir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { logger } from '../logger.js';
-import { getGlobalDir } from '../../storage/global-dir.js';
+import { getFraziymLocalDir } from '../../storage/global-dir.js';
 import { getRegisterHooks } from './node-module-compat.js';
 
 const DEFAULT_EMBEDDING_INSTALL_TIMEOUT_MS = 10 * 60 * 1000;
@@ -86,7 +87,7 @@ const EMBEDDING_STACK_PACKAGES = [
  */
 export const getEmbeddingRuntimeDir = (): string => {
   const override = process.env.AXODEX_EMBEDDING_RUNTIME_DIR?.trim();
-  return override ? resolve(override) : join(getGlobalDir(), 'embedding-runtime');
+  return override ? resolve(override) : join(getFraziymLocalDir(), 'axodex', 'embedding-runtime');
 };
 
 const EMBEDDING_STACK_NAMES = ['@huggingface/transformers', 'onnxruntime-node'] as const;
