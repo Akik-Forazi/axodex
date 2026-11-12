@@ -70,6 +70,7 @@
     "version": "node scripts/sync-plugin-manifests.mjs"
   },
   "dependencies": {
+    "@fraziym/tree-sitters": "file:../../tree-sitters",
     "@ladybugdb/core": "0.21.1",
     "@modelcontextprotocol/sdk": "^1.0.0",
     "@scarf/scarf": "^1.4.0",
@@ -99,7 +100,7 @@
     "proxy-addr": "^2.0.7",
     "smol-toml": "^1.8.0",
     "tree-sitter": "0.21.1",
-    "tree-sitter-bash": "^0.25.1",
+    "tree-sitter-bash": "^0.23.3",
     "tree-sitter-c-sharp": "0.23.1",
     "tree-sitter-cpp": "0.23.2",
     "tree-sitter-css": "^0.25.0",
@@ -117,7 +118,7 @@
     "tree-sitter-scala": "^0.24.0",
     "tree-sitter-typescript": "^0.23.2",
     "uuid": "^14.0.0",
-    "@fraziym/tree-sitters": ">=0.2.0-beta.1"
+    "@fraziym/mcp": "file:../../mcp"
   },
   "axodexEmbeddingStack": {
     "@huggingface/transformers": "^4.1.0",

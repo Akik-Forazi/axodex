@@ -129,13 +129,87 @@ const SMOKE_CASES: Record<string, SmokeCase> = {
     snippet: 'pub fn main() void {}\n',
     rootType: 'source_file',
   },
+
+  [SupportedLanguages.SQL]: {
+    language: SupportedLanguages.SQL,
+    filePath: 'a.sql',
+    snippet: 'SELECT 1;\n',
+    rootType: 'source_file',
+  },
+  [SupportedLanguages.Dockerfile]: {
+    language: SupportedLanguages.Dockerfile,
+    filePath: 'Dockerfile',
+    snippet: 'FROM node:22\nRUN echo hi\n',
+    rootType: 'source_file',
+  },
+  [SupportedLanguages.YAML]: {
+    language: SupportedLanguages.YAML,
+    filePath: 'a.yaml',
+    snippet: 'key: value\n',
+    rootType: 'stream',
+  },
+  [SupportedLanguages.TOML]: {
+    language: SupportedLanguages.TOML,
+    filePath: 'a.toml',
+    snippet: 'key = "value"\n',
+    rootType: 'document',
+  },
+  [SupportedLanguages.JSON]: {
+    language: SupportedLanguages.JSON,
+    filePath: 'a.json',
+    snippet: '{ "key": 1 }\n',
+    rootType: 'document',
+  },
+  [SupportedLanguages.HTML]: {
+    language: SupportedLanguages.HTML,
+    filePath: 'a.html',
+    snippet: '<html><body>hi</body></html>\n',
+    rootType: 'document',
+  },
+  [SupportedLanguages.CSS]: {
+    language: SupportedLanguages.CSS,
+    filePath: 'a.css',
+    snippet: 'body { color: red; }\n',
+    rootType: 'stylesheet',
+  },
+  [SupportedLanguages.Scala]: {
+    language: SupportedLanguages.Scala,
+    filePath: 'a.scala',
+    snippet: 'object Main { def main(args: Array[String]): Unit = {} }\n',
+    rootType: 'compilation_unit',
+  },
+  [SupportedLanguages.Elixir]: {
+    language: SupportedLanguages.Elixir,
+    filePath: 'a.ex',
+    snippet: 'defmodule Foo do\n  def bar, do: :ok\nend\n',
+    rootType: 'source',
+  },
+  [SupportedLanguages.Lua]: {
+    language: SupportedLanguages.Lua,
+    filePath: 'a.lua',
+    snippet: 'local x = 1\n',
+    rootType: 'chunk',
+  },
+  [SupportedLanguages.GraphQL]: {
+    language: SupportedLanguages.GraphQL,
+    filePath: 'a.graphql',
+    snippet: 'type Query { hello: String }\n',
+    rootType: 'source_file',
+  },
+  [SupportedLanguages.Bash]: {
+    language: SupportedLanguages.Bash,
+    filePath: 'a.sh',
+    snippet: 'echo hello\n',
+    rootType: 'program',
+  },
 };
 
 describe('parser-loader ABI load-smoke (#1922)', () => {
   const sources = listGrammarSources();
 
   it('has a smoke case for every registered grammar SOURCES entry', () => {
-    const missing = sources.map((s) => s.key).filter((key) => !(key in SMOKE_CASES));
+    const required = sources.filter((s) => !s.optional);
+    const missing = required.map((s) => s.key).filter((key) => !(key in SMOKE_CASES));
     expect(missing, `add a SMOKE_CASES entry for: ${missing.join(', ')}`).toEqual([]);
   });
 

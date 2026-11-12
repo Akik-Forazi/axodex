@@ -203,8 +203,7 @@ const SOURCES: Record<string, GrammarSource> = {
   [SupportedLanguages.Bash]: {
     load: () => _require('tree-sitter-bash'),
     unavailableNote:
-      'Bash parsing requires `tree-sitter-bash`. ' +
-      'Critical for AXONIZ shell tools output parsing. `npm ci` to fix.',
+      'Bash parsing requires `tree-sitter-bash`. `npm ci` to fix.',
   },
   [SupportedLanguages.SQL]: {
     load: () => _require('@fraziym/tree-sitters/sql'),
@@ -213,8 +212,11 @@ const SOURCES: Record<string, GrammarSource> = {
   },
   [SupportedLanguages.Dockerfile]: {
     load: () => _require('tree-sitter-dockerfile'),
+    optional: true,
+    severity: 'warn',
     unavailableNote:
-      'Dockerfile parsing requires `tree-sitter-dockerfile`. Check the install.',
+      'Dockerfile parsing requires `tree-sitter-dockerfile`. ' +
+      'The published package is a security placeholder; grammar unavailable.',
   },
   [SupportedLanguages.YAML]: {
     load: () => _require('@fraziym/tree-sitters/yaml'),
@@ -264,7 +266,7 @@ const SOURCES: Record<string, GrammarSource> = {
   [SupportedLanguages.GraphQL]: {
     load: () => _require('@fraziym/tree-sitters/graphql'),
     unavailableNote:
-      'GraphQL parsing requires `tree-sitter-graphql`. Check the install.',
+      'GraphQL parsing requires `@fraziym/tree-sitters/graphql`. Check the install.',
   },
 };
 
@@ -505,11 +507,33 @@ export const loadLanguage = async (
   parser.setLanguage(getLanguageGrammar(language, filePath));
 };
 
+// Per-language parser cache to avoid recreating parsers for the same language.
+// Parser instances are reusable across files of the same language (setLanguage
+// is cheap relative to new Parser()). This avoids GC pressure and repeated
+// native allocation in hot loops (parse workers, route extraction, embeddings).
+const parserCache = new Map<string, Parser>();
+
 export const createParserForLanguage = async (
   language: SupportedLanguages,
   filePath?: string,
 ): Promise<Parser> => {
+  const cacheKey = `${language}:${filePath ?? ''}`;
+  const cached = parserCache.get(cacheKey);
+  if (cached) {
+    try {
+      cached.setLanguage(getLanguageGrammar(language, filePath));
+      return cached;
+    } catch {
+      // Grammar changed or stale — fall through to create new
+    }
+  }
   const parser = new Parser();
   parser.setLanguage(getLanguageGrammar(language, filePath));
+  parserCache.set(cacheKey, parser);
   return parser;
+};
+
+export const clearParserCache = (): void => {
+  parserCache.clear();
+  sharedParser = null;
 };
